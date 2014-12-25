@@ -1,0 +1,8 @@
+<resources>
+
+    <string name="app_name">Challenge</string>
+    
+    <string name="title_activity_home">Challenge</string>
+    <string name="title_activity_picture">Pictures</string>
+
+</resources>
