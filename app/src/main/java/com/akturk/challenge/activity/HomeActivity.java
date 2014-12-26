@@ -43,14 +43,7 @@ public final class HomeActivity extends BaseActivity {
     @Subscribe
     public void OnCategorySelectedOnPhoneEvent(CategorySelectedOnPhoneEvent event) {
         // TODO Start picture activity
-
+        // TODO Load items
     }
-
-    @Subscribe
-    public void OnCategorySelectedOnTabletEvent(CategorySelectedOnTabletEvent event) {
-        // TODO Notify the picture fragment
-
-    }
-
 
 }
