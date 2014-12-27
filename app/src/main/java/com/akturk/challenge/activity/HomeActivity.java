@@ -7,13 +7,15 @@ import com.akturk.challenge.R;
 import com.akturk.challenge.annotation.NonPersistent;
 import com.akturk.challenge.annotation.Persistent;
 import com.akturk.challenge.event.CategorySelectedOnPhoneEvent;
-import com.akturk.challenge.event.CategorySelectedOnTabletEvent;
 import com.akturk.challenge.fragment.CategoryFragment;
 import com.akturk.challenge.fragment.PictureFragment;
+import com.fivehundredpx.api.FiveHundredException;
+import com.fivehundredpx.api.auth.AccessToken;
+import com.fivehundredpx.api.tasks.XAuth500pxTask;
 import com.squareup.otto.Subscribe;
 
 
-public final class HomeActivity extends BaseActivity {
+public final class HomeActivity extends BaseActivity implements XAuth500pxTask.Delegate {
 
     @Persistent
     private CategoryFragment mCategoryFragment;
@@ -46,4 +48,13 @@ public final class HomeActivity extends BaseActivity {
         // TODO Load items
     }
 
+    @Override
+    public void onSuccess(AccessToken result) {
+
+    }
+
+    @Override
+    public void onFail(FiveHundredException e) {
+
+    }
 }
