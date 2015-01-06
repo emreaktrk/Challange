@@ -1,7 +1,9 @@
 package com.akturk.challenge.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.akturk.challenge.R;
 import com.akturk.challenge.annotation.NonPersistent;
@@ -11,19 +13,20 @@ import com.akturk.challenge.event.CategorySelectedOnPhoneEvent;
 import com.akturk.challenge.fragment.CategoryFragment;
 import com.akturk.challenge.fragment.PictureFragment;
 import com.akturk.challenge.model.User;
+import com.akturk.challenge.provider.GsonProvider;
 import com.fivehundredpx.api.FiveHundredException;
 import com.fivehundredpx.api.PxApi;
 import com.fivehundredpx.api.auth.AccessToken;
 import com.fivehundredpx.api.tasks.UserDetailTask;
 import com.fivehundredpx.api.tasks.XAuth500pxTask;
-import com.google.gson.Gson;
 import com.nispok.snackbar.Snackbar;
+import com.nispok.snackbar.listeners.ActionClickListener;
 import com.squareup.otto.Subscribe;
 
 import org.json.JSONObject;
 
 
-public final class HomeActivity extends BaseActivity implements XAuth500pxTask.Delegate, UserDetailTask.Delegate {
+public final class HomeActivity extends BaseActivity implements XAuth500pxTask.Delegate, UserDetailTask.Delegate, ActionClickListener {
 
     @Persistent
     private CategoryFragment mCategoryFragment;
@@ -68,23 +71,37 @@ public final class HomeActivity extends BaseActivity implements XAuth500pxTask.D
 
     @Override
     public void onFail(FiveHundredException e) {
-
+        Snackbar.with(this)
+                .text("Login failed.")
+                .actionLabel("Retry")
+                .actionColor(Color.YELLOW)
+                .actionListener(this)
+                .duration(Snackbar.SnackbarDuration.LENGTH_SHORT)
+                .show(this);
     }
 
     @Override
     public void onSuccess(JSONObject response) {
-        Gson gson = new Gson();
-        User user = gson.fromJson(response.toString(), User.class);
+        User user = GsonProvider.getInstance().fromJson(response.toString(), User.class);
 
-        String text = "You have logged as " + user.getFirstname() + " " + user.getLastname();
+        CharSequence message = TextUtils.concat("You have logged as ", user.getFirstname(), " ", user.getLastname());
         Snackbar.with(this)
-                .text(text)
+                .text(message)
                 .duration(Snackbar.SnackbarDuration.LENGTH_SHORT)
                 .show(this);
     }
 
     @Override
     public void onFail() {
+        Snackbar.with(this)
+                .text("Login failed.")
+                .duration(Snackbar.SnackbarDuration.LENGTH_SHORT)
+                .show(this);
+    }
 
+    @Override
+    public void onActionClicked(Snackbar snackbar) {
+        XAuth500pxTask task = new XAuth500pxTask(this);
+        task.execute(ApplicationConstants.CONSUMER_KEY, ApplicationConstants.CONSUMER_SECRET, "emreaktrk", "Emrebey559876-");
     }
 }
