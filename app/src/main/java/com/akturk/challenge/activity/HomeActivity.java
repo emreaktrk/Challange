@@ -14,8 +14,8 @@ import com.akturk.challenge.fragment.CategoryFragment;
 import com.akturk.challenge.fragment.PictureFragment;
 import com.akturk.challenge.model.User;
 import com.akturk.challenge.provider.GsonProvider;
+import com.akturk.challenge.provider.PxApiProvider;
 import com.fivehundredpx.api.FiveHundredException;
-import com.fivehundredpx.api.PxApi;
 import com.fivehundredpx.api.auth.AccessToken;
 import com.fivehundredpx.api.tasks.UserDetailTask;
 import com.fivehundredpx.api.tasks.XAuth500pxTask;
@@ -23,7 +23,11 @@ import com.nispok.snackbar.Snackbar;
 import com.nispok.snackbar.listeners.ActionClickListener;
 import com.squareup.otto.Subscribe;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 
 public final class HomeActivity extends BaseActivity implements XAuth500pxTask.Delegate, UserDetailTask.Delegate, ActionClickListener {
@@ -63,10 +67,11 @@ public final class HomeActivity extends BaseActivity implements XAuth500pxTask.D
     }
 
     @Override
-    public void onSuccess(AccessToken result) {
-        PxApi api = new PxApi(result, ApplicationConstants.CONSUMER_KEY, ApplicationConstants.CONSUMER_SECRET);
+    public void onSuccess(AccessToken token) {
+        PxApiProvider.init(token);
+
         UserDetailTask task = new UserDetailTask(this);
-        task.execute(api);
+        task.execute(PxApiProvider.getInstance());
     }
 
     @Override
@@ -89,6 +94,13 @@ public final class HomeActivity extends BaseActivity implements XAuth500pxTask.D
                 .text(message)
                 .duration(Snackbar.SnackbarDuration.LENGTH_SHORT)
                 .show(this);
+
+
+        ArrayList<NameValuePair> list = new ArrayList<>();
+        list.add(new BasicNameValuePair("term", "bike"));
+
+        JSONObject jsonObject = PxApiProvider.getInstance().get("/photos/search?term=bike");
+        String result = jsonObject.toString();
     }
 
     @Override
