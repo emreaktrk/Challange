@@ -23,7 +23,7 @@ public final class PictureFragment extends BaseFragment {
         Category category = event.getCategory();
 
         PhotosSearchTask task = new PhotosSearchTask();
-        task.setTerm(category.getName());
+        task.setTerm(category.getValue());
         task.execute();
     }
 

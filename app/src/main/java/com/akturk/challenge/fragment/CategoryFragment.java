@@ -31,7 +31,7 @@ public final class CategoryFragment extends BaseFragment {
     @Subscribe
     public void onLoginSuccessEvent(LoginSuccessEvent event) {
         Category category = new Category();
-        category.setName("Bike");
+        category.setValue("Bike");
 
         ArrayList<Category> list = new ArrayList<>();
         list.add(category);

@@ -33,9 +33,9 @@ public final class HomeListAdapter extends ArrayAdapter<Category> {
             viewHolder = (ViewHolder) convertView.getTag();
 
         Category category = getItem(position);
-        viewHolder.mNameTextView.setText(category.getName());
+        viewHolder.mNameTextView.setText(category.getValue());
 
-        return super.getView(position, convertView, parent);
+        return convertView;
     }
 
     protected static final class ViewHolder {

@@ -64,7 +64,7 @@ public final class HomeActivity extends BaseActivity implements XAuth500pxTask.D
     @Subscribe
     public void OnCategorySelectedOnPhoneEvent(CategorySelectedOnPhoneEvent event) {
         Intent intent = new Intent(this, PictureActivity.class);
-        intent.putExtra(DataConstants.CATEGORY_SELECTED_EVENT, event);
+//        intent.putExtra(DataConstants.CATEGORY_SELECTED_EVENT, event);
         startActivity(intent);
     }
 

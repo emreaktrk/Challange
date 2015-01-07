@@ -3,5 +3,6 @@
     android:id="@id/cell_category_name"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     android:textColor="@android:color/black"
     style="@style/TextAppearance.AppCompat.Title"/>
