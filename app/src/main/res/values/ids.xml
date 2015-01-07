@@ -1,6 +1,8 @@
 <resources>
-    <item name="layout_home_container_category" type="id"/>
-    <item name="layout_home_container_picture" type="id"/>
+    <item name="layout_home_fragment_category" type="id"/>
+    <item name="layout_home_fragment_picture" type="id"/>
 
     <item name="fragment_category_listview" type="id"/>
+
+    <item name="cell_category_name" type="id"/>
 </resources>

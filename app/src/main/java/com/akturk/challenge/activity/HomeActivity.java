@@ -1,5 +1,6 @@
 package com.akturk.challenge.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,10 +10,14 @@ import com.akturk.challenge.R;
 import com.akturk.challenge.annotation.NonPersistent;
 import com.akturk.challenge.annotation.Persistent;
 import com.akturk.challenge.constant.ApplicationConstants;
+import com.akturk.challenge.constant.DataConstants;
 import com.akturk.challenge.event.CategorySelectedOnPhoneEvent;
+import com.akturk.challenge.event.CategorySelectedOnTabletEvent;
+import com.akturk.challenge.event.LoginSuccessEvent;
 import com.akturk.challenge.fragment.CategoryFragment;
 import com.akturk.challenge.fragment.PictureFragment;
 import com.akturk.challenge.model.User;
+import com.akturk.challenge.provider.BusProvider;
 import com.akturk.challenge.provider.GsonProvider;
 import com.akturk.challenge.provider.PxApiProvider;
 import com.fivehundredpx.api.FiveHundredException;
@@ -23,11 +28,7 @@ import com.nispok.snackbar.Snackbar;
 import com.nispok.snackbar.listeners.ActionClickListener;
 import com.squareup.otto.Subscribe;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 
 public final class HomeActivity extends BaseActivity implements XAuth500pxTask.Delegate, UserDetailTask.Delegate, ActionClickListener {
@@ -48,8 +49,8 @@ public final class HomeActivity extends BaseActivity implements XAuth500pxTask.D
     public void onSupportContentChanged() {
         super.onSupportContentChanged();
 
-        mCategoryFragment = (CategoryFragment) getSupportFragmentManager().findFragmentById(R.id.layout_home_container_category);
-        mPictureFragment = (PictureFragment) getSupportFragmentManager().findFragmentById(R.id.layout_home_container_picture);
+        mCategoryFragment = (CategoryFragment) getSupportFragmentManager().findFragmentById(R.id.layout_home_fragment_category);
+        mPictureFragment = (PictureFragment) getSupportFragmentManager().findFragmentById(R.id.layout_home_fragment_picture);
     }
 
     @Override
@@ -62,8 +63,14 @@ public final class HomeActivity extends BaseActivity implements XAuth500pxTask.D
 
     @Subscribe
     public void OnCategorySelectedOnPhoneEvent(CategorySelectedOnPhoneEvent event) {
-        // TODO Start picture activity
-        // TODO Load items
+        Intent intent = new Intent(this, PictureActivity.class);
+        intent.putExtra(DataConstants.CATEGORY_SELECTED_EVENT, event);
+        startActivity(intent);
+    }
+
+    @Subscribe
+    public void OnCategorySelectedOnTabletEvent(CategorySelectedOnTabletEvent event) {
+        // TODO Reload items
     }
 
     @Override
@@ -72,6 +79,9 @@ public final class HomeActivity extends BaseActivity implements XAuth500pxTask.D
 
         UserDetailTask task = new UserDetailTask(this);
         task.execute(PxApiProvider.getInstance());
+
+        LoginSuccessEvent event = new LoginSuccessEvent();
+        BusProvider.getInstance().post(event);
     }
 
     @Override
@@ -94,13 +104,6 @@ public final class HomeActivity extends BaseActivity implements XAuth500pxTask.D
                 .text(message)
                 .duration(Snackbar.SnackbarDuration.LENGTH_SHORT)
                 .show(this);
-
-
-        ArrayList<NameValuePair> list = new ArrayList<>();
-        list.add(new BasicNameValuePair("term", "bike"));
-
-        JSONObject jsonObject = PxApiProvider.getInstance().get("/photos/search?term=bike");
-        String result = jsonObject.toString();
     }
 
     @Override

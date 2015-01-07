@@ -6,11 +6,11 @@
     android:orientation="horizontal"
     tools:context=".CategoriesActivity">
 
-    <FrameLayout
-        android:id="@id/layout_home_container_category"
+    <fragment
+        android:id="@id/layout_home_fragment_category"
+        android:name="com.akturk.challenge.fragment.CategoryFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@android:color/holo_red_dark"/>
+        android:layout_weight="1"/>
 
 </LinearLayout>

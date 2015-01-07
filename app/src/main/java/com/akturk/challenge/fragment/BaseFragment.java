@@ -16,7 +16,6 @@ import com.akturk.challenge.provider.BusProvider;
 import butterknife.ButterKnife;
 
 abstract class BaseFragment extends Fragment {
-    protected static final int NO_ID = -1;
     private Context mContext;
 
     @Override
