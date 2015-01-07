@@ -16,6 +16,8 @@ import com.akturk.challenge.event.CategorySelectedOnTabletEvent;
 import com.akturk.challenge.event.LoginSuccessEvent;
 import com.akturk.challenge.fragment.CategoryFragment;
 import com.akturk.challenge.fragment.PictureFragment;
+import com.akturk.challenge.model.Category;
+import com.akturk.challenge.model.Search;
 import com.akturk.challenge.model.User;
 import com.akturk.challenge.provider.BusProvider;
 import com.akturk.challenge.provider.GsonProvider;
@@ -63,8 +65,15 @@ public final class HomeActivity extends BaseActivity implements XAuth500pxTask.D
 
     @Subscribe
     public void OnCategorySelectedOnPhoneEvent(CategorySelectedOnPhoneEvent event) {
+        Category category = event.getCategory();
+        String value = category.getValue();
+
+        Search search = new Search();
+        search.setTerm(value);
+
         Intent intent = new Intent(this, PictureActivity.class);
-//        intent.putExtra(DataConstants.CATEGORY_SELECTED_EVENT, event);
+        intent.putExtra(DataConstants.SEARCH, search);
+        
         startActivity(intent);
     }
 
@@ -117,6 +126,6 @@ public final class HomeActivity extends BaseActivity implements XAuth500pxTask.D
     @Override
     public void onActionClicked(Snackbar snackbar) {
         XAuth500pxTask task = new XAuth500pxTask(this);
-        task.execute(ApplicationConstants.CONSUMER_KEY, ApplicationConstants.CONSUMER_SECRET, "emreaktrk", "Emrebey559876-");
+        task.execute(ApplicationConstants.CONSUMER_KEY, ApplicationConstants.CONSUMER_SECRET, "username", "password");
     }
 }

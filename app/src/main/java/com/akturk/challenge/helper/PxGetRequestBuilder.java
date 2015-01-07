@@ -2,6 +2,7 @@ package com.akturk.challenge.helper;
 
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import org.apache.http.message.BasicNameValuePair;
 
@@ -36,10 +37,8 @@ public class PxGetRequestBuilder {
         String query = mRequestUrl + "?";
 
         for (BasicNameValuePair pair : mListParams) {
-            query.concat(pair.getName());
-            query.concat("=");
-            query.concat(pair.getValue());
-            query.concat("&");
+            query = query.concat(pair.toString());
+            query = query.concat("&");
         }
 
         return query;

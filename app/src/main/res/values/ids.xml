@@ -5,4 +5,8 @@
     <item name="fragment_category_listview" type="id"/>
 
     <item name="cell_category_name" type="id"/>
+    <item name="activity_picture_container" type="id"/>
+    <item name="cell_picture_imageview" type="id"/>
+    <item name="fragment_picture_gridview" type="id"/>
+    <item name="cell_picture_textview" type="id"/>
 </resources>
