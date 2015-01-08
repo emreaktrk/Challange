@@ -60,7 +60,7 @@ public final class HomeActivity extends BaseActivity implements XAuth500pxTask.D
         super.onCreate(savedInstanceState);
 
         XAuth500pxTask task = new XAuth500pxTask(this);
-        task.execute(ApplicationConstants.CONSUMER_KEY, ApplicationConstants.CONSUMER_SECRET, "emreaktrk", "Emrebey559876-");
+        task.execute(ApplicationConstants.CONSUMER_KEY, ApplicationConstants.CONSUMER_SECRET, "username", "password");
     }
 
     @Subscribe
